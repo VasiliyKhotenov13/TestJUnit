@@ -10,42 +10,38 @@ public class UserTest {
 
     private User user1;
     private User user2;
-    private User user3;
 
     @BeforeEach
     public void setUp() {
-        String goodEmail = "sky@pro.com";
-        String badEmail = "sky_pro_com";
-
-        user1 = new User("Vasiliy13", goodEmail);
-        user2 = new User("Cvetochek123", badEmail);
-        user3 = new User();
-
+        user1 = new User("Vasiliy13", "sky@pro.com");
+        user2 = new User();
     }
 
     @Test
     @DisplayName("Задание 1. Тест создания объекта User с передачей в него 2х параметров.")
     public void checkUserWithParam() {
-        assertNotNull(user1.getLogin());
-        assertNotNull(user1.getEmail());
+        assertEquals("Vasiliy13", user1.getLogin());
+        assertEquals("sky@pro.com", user1.getEmail());
     }
 
     @Test
     @DisplayName("Задание 2. Тест создания объекта User без передачи в него параметров.")
     public void checkUserWithoutParam() {
-        assertNull(user3.getLogin());
-        assertNull(user3.getEmail());
+        assertNull(user2.getLogin());
+        assertNull(user2.getEmail());
     }
 
     @Test
     @DisplayName("Задание 3. Проверка корректности написания Email.")
     public void checkCorrectEmail() {
-        assertTrue(user1.checkEmail(user1.getEmail()));
+        assertThrows(IllegalArgumentException.class,
+                () -> new User("login","skyprocom"));
     }
 
     @Test
     @DisplayName("Задание 4. Проверка равенства login и email (они не должны быть равны).")
     public void checkEqualityEmailAndLogin() {
-        assertNotEquals(user1.getLogin(), user1.getEmail());
+        assertThrows(IllegalArgumentException.class,
+                () -> new User("sky@pro.com","sky@pro.com"));
     }
 }
